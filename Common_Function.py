@@ -65,7 +65,7 @@ def scan_dir_and_subdir(directory)->list:
       item_path = os.path.join(directory, item)
       # Jika item adalah direktori, lakukan pemindaian rekursif
       if os.path.isdir(item_path):
-          all_files.extend(scan_directory(item_path))
+          all_files.extend(scan_dir_and_subdir(item_path))
       else:
           # Jika item adalah file, tambahkan ke list
           all_files.append(item_path)
