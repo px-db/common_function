@@ -159,3 +159,42 @@ def json_to_string(py_dict):
   Konveri dict ke string json
   """
   return json.dumps(py_dict)
+
+def file_list(files:list, extensions:list)->list:
+  # Filter file dengan ekstensi tertentu
+  return [file for file in files if any(file.endswith(ext) for ext in extensions)]
+
+def list_to_sqlite(db_name:str, data_list:list, columns:list, table_name:str)->None:
+  """
+  Parameter :
+    db_name : nama database (string)
+    data_list : data dalam list
+    columns : kolom table
+      columns = [
+          ('ID', 'INTEGER PRIMARY KEY'),
+          ('Name', 'TEXT'),
+          ('Age', 'INTEGER')
+      ]
+    table_name : nama tabel (string)
+
+  """
+  # Koneksikan ke database SQLite (atau buat database baru jika belum ada)
+  conn = sqlite3.connect(db_name)
+  
+  # Buat cursor objek
+  cursor = conn.cursor()
+
+  columns_with_types = ', '.join([f'{col_name} {col_type}' for col_name, col_type in columns])
+  create_table_sql = f'CREATE TABLE IF NOT EXISTS {table_name} ({columns_with_types})'
+  # Buat tabel jika belum ada
+  cursor.execute(create_table_sql)
+  # Simpan perubahan
+
+  # Masukkan data ke dalam tabel
+  insert_sql = f'INSERT INTO {table_name} ({", ".join([col_name for col_name, _ in columns])}) VALUES ({", ".join(["?" for _ in columns])})'
+  cursor.executemany(insert_sql, data_list)
+
+  conn.commit()
+  
+  # Tutup koneksi
+  conn.close()
