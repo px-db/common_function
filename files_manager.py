@@ -1,6 +1,8 @@
 import os
 
-def ls(path_dir:str, **kwargs) :
+def ls(path_dir:str = None, **kwargs) :
+  if not path_dir :
+    path_dir = os.getcwd()
   result = []
   rec = kwargs.get('recursive', True)
   fil = kwargs.get('with_file', True)
