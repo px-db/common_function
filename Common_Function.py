@@ -3,6 +3,7 @@ import os
 import json
 import subprocess
 import sqlite3
+import csv
 
 def mid(text:str, start_pos:int, length:int):
   """
@@ -199,3 +200,16 @@ def list_to_sqlite(db_name:str, data_list:list, columns:list, table_name:str)->N
   
   # Tutup koneksi
   conn.close()
+
+def csv_to_List(fileCsv)->list:
+  # Inisialisasi list kosong untuk menyimpan data
+  data_list = []
+  # Buka file CSV dan baca isinya
+  with open(fileCsv, 'r') as file:
+    csv_reader = csv.reader(file)    
+    # Lewati baris header
+    next(csv_reader, None)    
+    # Iterasi setiap baris dalam file CSV
+    for row in csv_reader:
+      data_list.append(row)
+  return data_list
