@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import json
 import subprocess
+import sqlite3
 
 def mid(text:str, start_pos:int, length:int):
   """
