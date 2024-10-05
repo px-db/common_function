@@ -236,3 +236,9 @@ def sqlite_to_df(file_database:str, query:str):
   # Menutup koneksi
   conn.close()
   return df
+
+def list_to_csv(data:list, outputCsv:str):
+  with open(outputCsv, mode='w', newline='') as file:
+    writer = csv.writer(file)    
+    # Menulis setiap baris dari list ke file CSV
+    writer.writerows(data)
