@@ -227,3 +227,12 @@ def sqlite_to_list(file_database:str, query:str)->list:
   conn.close()
   # return hasil sebagai list
   return rows
+
+def sqlite_to_df(file_database:str, query:str):
+  # Koneksi ke database SQLite
+  conn = sqlite3.connect(file_database)
+  # Membaca data dari SQLite (kolom tertentu) ke dalam DataFrame
+  df = pd.read_sql_query(query, conn)
+  # Menutup koneksi
+  conn.close()
+  return df
