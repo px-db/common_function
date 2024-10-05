@@ -213,3 +213,17 @@ def csv_to_List(fileCsv)->list:
     for row in csv_reader:
       data_list.append(row)
   return data_list
+
+def sqlite_to_list(file_database:str, query:str)->list:
+  # Koneksi ke database SQLite
+  conn = sqlite3.connect(file_database)
+  # Membuat objek cursor
+  cursor = conn.cursor()
+  # Menjalankan query untuk mengambil data
+  cursor.execute(query)
+  # Mengambil hasil query dan mengubahnya menjadi list
+  rows = cursor.fetchall()
+  # Menutup koneksi
+  conn.close()
+  # return hasil sebagai list
+  return rows
